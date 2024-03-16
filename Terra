@@ -1,0 +1,19 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "Terra" {
+  ami           = "ami-0d7a109bf30624c99"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Terra"
+  }
+
+  // Associate the instance with an Elastic IP
+  associate_public_ip_address = true
+}
+
+resource "aws_eip" "Terra" {
+  instance = aws_instance.Terra.id
+}
